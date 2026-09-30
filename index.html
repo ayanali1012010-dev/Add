@@ -29,7 +29,7 @@
             flex-direction: column;
         }
 
-        /* ANTI-ADBLOCK OVERLAY */
+        /* HARD ANTI-ADBLOCK OVERLAY */
         #adblock-notice {
             display: none;
             position: fixed;
@@ -37,8 +37,8 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: #0d1117;
-            z-index: 999999999;
+            background: rgba(13, 17, 23, 0.99);
+            z-index: 9999999999;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -52,9 +52,9 @@
             font-weight: 800;
         }
         #adblock-notice p {
-            color: #8b949e;
+            color: #c9d1d9;
             font-size: 14px;
-            max-width: 380px;
+            max-width: 400px;
             line-height: 1.6;
             margin-bottom: 22px;
         }
@@ -64,7 +64,7 @@
             padding: 14px 28px;
             border-radius: 8px;
             border: none;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 800;
             letter-spacing: 1px;
             cursor: pointer;
@@ -326,11 +326,11 @@
     <!-- ADBLOCK DETECTED OVERLAY -->
     <div id="adblock-notice">
         <h2>⚠️ ADBLOCKER DETECTED!</h2>
-        <p>हमारे सर्वर का खर्च ऐड्स से चलता है। कृपया अपना <b>AdBlocker, Brave Shields या Private DNS</b> बंद करें और रीलोड करें।</p>
+        <p>Brave Shields / AdBlocker चालू है! <br><br>कृपया ऊपर URL बार में 🦁 <b>Brave Shields</b> या अपना <b>AdBlocker बंद करें</b> और पेज को रीलोड करें।</p>
         <button class="btn-reload" onclick="window.location.reload()">I DISABLED ADBLOCK (RELOAD)</button>
     </div>
 
-    <!-- ================= FULLSCREEN MANDATORY 15s AD OVERLAY ================= -->
+    <!-- MANDATORY 15s AD OVERLAY -->
     <div id="adOverlay">
         <div class="overlay-card">
             <div id="overlayStepText" class="overlay-title">SPONSORED VERIFICATION</div>
@@ -504,24 +504,46 @@
         let currentStep = 1;
         let selectedDuration = "3h";
         let totalSteps = 4;
+        let isAdBlockDetected = false;
 
-        // Anti-AdBlock Detector
-        function checkAdBlock() {
-            let testAd = document.createElement('div');
-            testAd.innerHTML = '&nbsp;';
-            testAd.className = 'adsbox pub_300x250 pub_300x250m pub_728x90 text-ad textAd text_ad text_ads';
-            testAd.style.position = 'absolute';
-            testAd.style.left = '-9999px';
-            document.body.appendChild(testAd);
-
-            setTimeout(function() {
-                if (testAd.offsetHeight === 0 || testAd.style.display === 'none' || !testAd.parentNode) {
-                    document.getElementById('adblock-notice').style.display = 'flex';
-                }
-                testAd.remove();
-            }, 600);
+        // ================= SUPER BRAVE/ADBLOCK DETECTOR =================
+        function triggerAdblockNotice() {
+            if (isAdBlockDetected) return;
+            isAdBlockDetected = true;
+            document.getElementById('adblock-notice').style.display = 'flex';
+            // Pura site aur timers freeze
+            if (window.overlayInterval) clearInterval(window.overlayInterval);
+            if (window.countdownInterval) clearInterval(window.countdownInterval);
         }
-        window.addEventListener('load', checkAdBlock);
+
+        async function detectAdBlocker() {
+            // 1. Bait URL fetch test (Brave ise turant block karta hai)
+            try {
+                const testUrl = new Request('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', {
+                    method: 'HEAD',
+                    mode: 'no-cors'
+                });
+                await fetch(testUrl);
+            } catch (error) {
+                triggerAdblockNotice();
+                return;
+            }
+
+            // 2. DOM Bait Check
+            let bait = document.createElement('div');
+            bait.className = 'pub_300x250 pub_300x250m pub_728x90 text-ad textAd text_ad text_ads text-ads text-ad-links';
+            bait.style.cssText = 'width: 1px !important; height: 1px !important; position: absolute !important; left: -10000px !important; top: -1000px !important;';
+            document.body.appendChild(bait);
+
+            setTimeout(() => {
+                if (bait.offsetHeight === 0 || bait.clientHeight === 0 || bait.style.display === 'none') {
+                    triggerAdblockNotice();
+                }
+                bait.remove();
+            }, 300);
+        }
+
+        window.addEventListener('DOMContentLoaded', detectAdBlocker);
 
         try {
             const params = new URLSearchParams(window.location.search);
@@ -579,13 +601,14 @@
             overlayTimer.innerText = "Please view ad to unlock content (" + adSeconds + "s)";
             unlockBtn.innerText = "PLEASE WAIT (" + adSeconds + "s)...";
 
-            const adInterval = setInterval(() => {
+            window.overlayInterval = setInterval(() => {
+                if (isAdBlockDetected) return;
                 adSeconds--;
                 if (adSeconds > 0) {
                     overlayTimer.innerText = "Please view ad to unlock content (" + adSeconds + "s)";
                     unlockBtn.innerText = "PLEASE WAIT (" + adSeconds + "s)...";
                 } else {
-                    clearInterval(adInterval);
+                    clearInterval(window.overlayInterval);
                     overlayTimer.innerText = "✅ Ad verification completed!";
                     unlockBtn.disabled = false;
                     unlockBtn.innerText = "CONTINUE TO PAGE ➔";
@@ -612,13 +635,14 @@
             btn.innerText = "⏳ PLEASE WAIT (" + timerSeconds + "s)...";
             timerDisplay.innerText = "⏳ VERIFYING SESSION: PLEASE WAIT (" + timerSeconds + "s)...";
 
-            const countdownInterval = setInterval(() => {
+            window.countdownInterval = setInterval(() => {
+                if (isAdBlockDetected) return;
                 timerSeconds--;
                 if (timerSeconds > 0) {
                     timerDisplay.innerText = "⏳ VERIFYING SESSION: PLEASE WAIT (" + timerSeconds + "s)...";
                     btn.innerText = "⏳ PLEASE WAIT (" + timerSeconds + "s)...";
                 } else {
-                    clearInterval(countdownInterval);
+                    clearInterval(window.countdownInterval);
                     
                     timerDisplay.style.display = "none";
                     scrollMsg.style.display = "block";
