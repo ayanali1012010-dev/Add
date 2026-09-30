@@ -29,6 +29,47 @@
             flex-direction: column;
         }
 
+        /* ANTI-ADBLOCK OVERLAY */
+        #adblock-notice {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #0d1117;
+            z-index: 999999999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 24px;
+        }
+        #adblock-notice h2 {
+            color: #f85149;
+            font-size: 24px;
+            margin-bottom: 12px;
+            font-weight: 800;
+        }
+        #adblock-notice p {
+            color: #8b949e;
+            font-size: 14px;
+            max-width: 380px;
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+        .btn-reload {
+            background: #238636;
+            color: #ffffff;
+            padding: 14px 28px;
+            border-radius: 8px;
+            border: none;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
         /* ================= MANDATORY AD OVERLAY ================= */
         #adOverlay {
             position: fixed;
@@ -282,6 +323,13 @@
 </head>
 <body>
 
+    <!-- ADBLOCK DETECTED OVERLAY -->
+    <div id="adblock-notice">
+        <h2>⚠️ ADBLOCKER DETECTED!</h2>
+        <p>हमारे सर्वर का खर्च ऐड्स से चलता है। कृपया अपना <b>AdBlocker, Brave Shields या Private DNS</b> बंद करें और रीलोड करें।</p>
+        <button class="btn-reload" onclick="window.location.reload()">I DISABLED ADBLOCK (RELOAD)</button>
+    </div>
+
     <!-- ================= FULLSCREEN MANDATORY 15s AD OVERLAY ================= -->
     <div id="adOverlay">
         <div class="overlay-card">
@@ -455,7 +503,25 @@
 
         let currentStep = 1;
         let selectedDuration = "3h";
-        let totalSteps = 4; // 3h ke liye 4 steps
+        let totalSteps = 4;
+
+        // Anti-AdBlock Detector
+        function checkAdBlock() {
+            let testAd = document.createElement('div');
+            testAd.innerHTML = '&nbsp;';
+            testAd.className = 'adsbox pub_300x250 pub_300x250m pub_728x90 text-ad textAd text_ad text_ads';
+            testAd.style.position = 'absolute';
+            testAd.style.left = '-9999px';
+            document.body.appendChild(testAd);
+
+            setTimeout(function() {
+                if (testAd.offsetHeight === 0 || testAd.style.display === 'none' || !testAd.parentNode) {
+                    document.getElementById('adblock-notice').style.display = 'flex';
+                }
+                testAd.remove();
+            }, 600);
+        }
+        window.addEventListener('load', checkAdBlock);
 
         try {
             const params = new URLSearchParams(window.location.search);
@@ -468,7 +534,7 @@
 
             if (claimParam === '6h') {
                 selectedDuration = '6h';
-                totalSteps = 6; // 6h ke liye 6 steps
+                totalSteps = 6;
             } else {
                 selectedDuration = '3h';
                 totalSteps = 4;
@@ -571,7 +637,6 @@
             const btn = document.getElementById("btnContinue");
             const adState = sessionStorage.getItem('step_' + currentStep + '_ad_clicked');
 
-            // 3h ke liye (Step 1, 3) aur 6h ke liye (Step 1, 3, 5) par click karne se Direct Link khulega
             const isAdTriggerStep = (currentStep === 1 || currentStep === 3 || (selectedDuration === '6h' && currentStep === 5));
 
             if (isAdTriggerStep && adState !== 'true') {
@@ -587,7 +652,6 @@
             if (currentStep < totalSteps) {
                 window.location.href = window.location.pathname + "?step=" + (currentStep + 1) + "&claim=" + selectedDuration;
             } else {
-                // Last step ke baad Key Generator site par redirect
                 const freshToken = Date.now();
                 window.location.href = "https://ayanali1012010-dev.github.io/ayan-key/?claim=" + selectedDuration + "&token=" + freshToken;
             }
