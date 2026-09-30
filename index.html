@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance & Wealth Portal - Secure Gateway</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            line-height: 1.7;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ================= MANDATORY AD OVERLAY (ALL STEPS) ================= */
+        #adOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(13, 17, 23, 0.98);
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .overlay-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            max-width: 420px;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+        }
+
+        .overlay-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: #58a6ff;
+            margin-bottom: 6px;
+        }
+
+        .overlay-timer {
+            font-size: 13px;
+            color: #f85149;
+            font-weight: bold;
+            margin-bottom: 14px;
+        }
+
+        .overlay-ad-box {
+            width: 100%;
+            min-height: 250px;
+            background: #0d1117;
+            border: 1px dashed #30363d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8b949e;
+            font-size: 12px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        /* ================= MAIN SITE STYLES ================= */
+        header {
+            background: #161b22;
+            border-bottom: 1px solid #30363d;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 800;
+            color: #58a6ff;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .step-badge {
+            background: #238636;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 5px 12px;
+            border-radius: 14px;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 20px auto;
+            padding: 0 16px;
+            width: 100%;
+            flex: 1;
+        }
+
+        .timer-panel {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 14px 18px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .timer-text {
+            font-size: 15px;
+            font-weight: 700;
+            color: #58a6ff;
+        }
+
+        .scroll-prompt {
+            display: none;
+            color: #3fb950;
+            font-size: 15px;
+            font-weight: 800;
+            animation: bounce 1.2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(4px); }
+        }
+
+        /* Ad Slots Placeholder Style */
+        .ad-placeholder {
+            width: 100%;
+            min-height: 250px;
+            margin: 24px 0;
+            border: 1px dashed #30363d;
+            background: #161b22;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8b949e;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            overflow: hidden;
+        }
+
+        .content-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 26px 22px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #ffffff;
+            margin-bottom: 14px;
+            line-height: 1.3;
+        }
+
+        h2 {
+            font-size: 19px;
+            color: #58a6ff;
+            margin: 24px 0 12px;
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: #8b949e;
+            font-size: 15px;
+        }
+
+        ul {
+            margin: 0 0 18px 24px;
+            color: #8b949e;
+            font-size: 14px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .notice-box {
+            background: rgba(88, 166, 255, 0.08);
+            border-left: 4px solid #58a6ff;
+            padding: 14px 16px;
+            border-radius: 4px;
+            margin: 20px 0;
+            font-size: 14px;
+            color: #c9d1d9;
+        }
+
+        /* Extreme Bottom Action Panel */
+        .bottom-action-panel {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 24px 20px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .btn-action {
+            width: 100%;
+            padding: 16px;
+            border-radius: 8px;
+            border: none;
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            display: block;
+            text-decoration: none;
+        }
+
+        .btn-action:disabled {
+            background: #21262d;
+            color: #484f58;
+            cursor: not-allowed;
+            border: 1px solid #30363d;
+        }
+
+        .btn-action:not(:disabled) {
+            background: #238636;
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(35, 134, 54, 0.4);
+        }
+
+        .btn-action:not(:disabled):hover {
+            background: #2ea043;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #484f58;
+            border-top: 1px solid #21262d;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= FULLSCREEN MANDATORY 15s AD OVERLAY ================= -->
+    <div id="adOverlay">
+        <div class="overlay-card">
+            <div id="overlayStepText" class="overlay-title">SPONSORED VERIFICATION (STEP 1/4)</div>
+            <div id="overlayTimerText" class="overlay-timer">Please view ad to unlock content (15s)</div>
+            
+            <!-- MANDATORY POPUP AD SLOT -->
+            <div class="overlay-ad-box">
+                <!-- [MANDATORY POPUP AD CODE YAHAN DALEIN] -->
+            </div>
+
+            <button id="btnUnlockSite" class="btn-action" disabled onclick="closeAdOverlay()">PLEASE WAIT (15s)...</button>
+        </div>
+    </div>
+
+    <!-- MAIN HEADER -->
+    <header>
+        <a href="#" class="logo">FINANCE<span>GATE</span></a>
+        <span id="stepIndicator" class="step-badge">STEP 1/4</span>
+    </header>
+
+    <div class="container">
+
+        <!-- TOP TIMER & STATUS PANEL -->
+        <div class="timer-panel">
+            <div id="timerCountdown" class="timer-text">⏳ VERIFYING SESSION: PLEASE WAIT...</div>
+            <div id="scrollPrompt" class="scroll-prompt">✅ VERIFICATION READY — SCROLL DOWN TO CONTINUE ⬇</div>
+        </div>
+
+        <!-- ==================== AD SLOT 1 ==================== -->
+        <div class="ad-placeholder">
+            <!-- [AD CODE 1 YAHAN DALEIN] -->
+        </div>
+
+        <!-- CONTENT SECTION 1 -->
+        <div class="content-card">
+            <h1 id="articleTitle">Complete Strategy for Debt Optimization and Refinancing</h1>
+            
+            <p>Managing multiple high-interest obligations can place immense stress on personal and business cash flow. Through strategic loan restructuring and balance consolidation, borrowers can significantly reduce overall amortization timelines while lowering annual percentage rates (APR).</p>
+
+            <div class="notice-box">
+                <strong>Important Notice:</strong> Before initiating debt replacement procedures, thoroughly analyze potential origination charges, collateral conditions, and credit bureau reporting statuses.
+            </div>
+        </div>
+
+        <!-- ==================== AD SLOT 2 ==================== -->
+        <div class="ad-placeholder">
+            <!-- [AD CODE 2 YAHAN DALEIN] -->
+        </div>
+
+        <!-- CONTENT SECTION 2 -->
+        <div class="content-card">
+            <h2>Phase 1: Evaluating Historical Credit Metrics</h2>
+            <p>Financial institutions evaluate credit profiles based on debt-to-income (DTI) metrics, repayment consistency, and current revolving account utilization. Maintaining utilization rates under thirty percent directly improves institutional approval likelihood.</p>
+            <ul>
+                <li>Review all three major credit repository reports for reporting discrepancies.</li>
+                <li>Calculate exact remaining principal versus accrued monthly interest charges.</li>
+                <li>Identify existing prepayment penalty clauses within original loan contracts.</li>
+            </ul>
+        </div>
+
+        <!-- ==================== AD SLOT 3 ==================== -->
+        <div class="ad-placeholder">
+            <!-- [AD CODE 3 YAHAN DALEIN] -->
+        </div>
+
+        <!-- CONTENT SECTION 3 -->
+        <div class="content-card">
+            <h2>Phase 2: Risk Assessment & Cost Optimization</h2>
+            <p>Effective restructuring requires comparing cumulative costs across the entire lifecycle of the facility. An extended amortization schedule might lower current monthly outflows but could accumulate significantly higher aggregate interest payments over time.</p>
+            <p>Utilize financial amortization tables to pinpoint the break-even point where refinancing savings completely offset upfront application and closing fees.</p>
+        </div>
+
+        <!-- ==================== AD SLOT 4 ==================== -->
+        <div class="ad-placeholder">
+            <!-- [AD CODE 4 YAHAN DALEIN] -->
+        </div>
+
+        <!-- CONTENT SECTION 4 -->
+        <div class="content-card">
+            <h2>Phase 3: Modern Digital Underwriting Systems</h2>
+            <p>Modern credit processing uses automated algorithmic underwriting rather than manual agent evaluations. By submitting structured digital verification packets, applicants reduce clearance latency from weeks to under twenty-four hours.</p>
+            <p>Ensure that all submitted identity credentials and income verification nodes align perfectly with centralized banking records to eliminate verification failures.</p>
+        </div>
+
+        <!-- ==================== AD SLOT 5 ==================== -->
+        <div class="ad-placeholder">
+            <!-- [AD CODE 5 YAHAN DALEIN] -->
+        </div>
+
+        <!-- CONTENT SECTION 5 -->
+        <div class="content-card">
+            <h2>Phase 4: Collateralized vs. Unsecured Restructuring</h2>
+            <p>Borrowers often choose between securing loans against personal assets or maintaining unsecured financing agreements. While secured facilities offer preferential interest rate margins, they introduce lien commitments against equity.</p>
+            <ul>
+                <li>Unsecured loans protect personal property against liquidation procedures.</li>
+                <li>Secured facilities unlock higher borrowing thresholds and extended repayment periods.</li>
+                <li>Fixed interest structures safeguard against adverse macroeconomic rate hikes.</li>
+            </ul>
+        </div>
+
+        <!-- ==================== AD SLOT 6 ==================== -->
+        <div class="ad-placeholder">
+            <!-- [AD CODE 6 YAHAN DALEIN] -->
+        </div>
+
+        <!-- CONTENT SECTION 6 -->
+        <div class="content-card">
+            <h2>Phase 5: Final Gateway Session Verification</h2>
+            <p>Session integrity verification protects network nodes from automated scraping and illegitimate gateway passage. Please proceed to the bottom of the page to finalize your credentials and unlock the next verified node.</p>
+            <p>Once the system clears your session timer, the continue action will become active below.</p>
+        </div>
+
+        <!-- ==================== AD SLOT 7 ==================== -->
+        <div class="ad-placeholder">
+            <!-- [AD CODE 7 YAHAN DALEIN] -->
+        </div>
+
+        <!-- EXTREME BOTTOM CONTINUE PANEL -->
+        <div class="bottom-action-panel" id="actionPanel">
+            <div style="font-size: 12px; color: #8b949e; margin-bottom: 12px; letter-spacing: 1px;">FINAL GATEWAY CONFIRMATION</div>
+            <button id="btnContinue" class="btn-action" disabled onclick="handleContinue()">PLEASE WAIT FOR TIMER...</button>
+        </div>
+
+        <!-- ==================== AD SLOT 8 ==================== -->
+        <div class="ad-placeholder">
+            <!-- [AD CODE 8 YAHAN DALEIN] -->
+        </div>
+
+    </div>
+
+    <footer>Verification Gateway Node • 256-Bit Authenticated Protocol</footer>
+
+    <script>
+        // Har step ke baad agle step ke timers: Step 1 (20s), Step 2 (21s), Step 3 (21s), Step 4 (22s)
+        const stepTimers = [20, 21, 21, 22];
+
+        const stepHeadings = [
+            "Step 1: Strategic Debt Optimization & Capital Planning",
+            "Step 2: Underwriting Protocols & Security Verification",
+            "Step 3: Asset Protection & Gateway Authentication",
+            "Step 4: Final Session Clearance & Access Protocol"
+        ];
+
+        let currentStep = 1;
+        let selectedDuration = "3h"; // Default duration agar URL me na ho
+
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            const stepParam = params.get('step');
+            const claimParam = params.get('claim');
+
+            if (stepParam) {
+                currentStep = parseInt(stepParam) || 1;
+            }
+
+            if (claimParam === '6h' || claimParam === '3h') {
+                selectedDuration = claimParam;
+            }
+
+            // Har step par pehle 15s ka mandatory ad overlay start karein
+            startMandatoryAdOverlay();
+        };
+
+        // 15-Second Mandatory Ad Overlay Function
+        function startMandatoryAdOverlay() {
+            let adSeconds = 15;
+            const overlay = document.getElementById("adOverlay");
+            const unlockBtn = document.getElementById("btnUnlockSite");
+            const overlayTimer = document.getElementById("overlayTimerText");
+            const overlayStepText = document.getElementById("overlayStepText");
+
+            overlay.style.display = "flex";
+            overlayStepText.innerText = "SPONSORED VERIFICATION (STEP " + currentStep + "/4)";
+            unlockBtn.disabled = true;
+
+            const adInterval = setInterval(() => {
+                adSeconds--;
+                if (adSeconds > 0) {
+                    overlayTimer.innerText = "Please view ad to unlock content (" + adSeconds + "s)";
+                    unlockBtn.innerText = "PLEASE WAIT (" + adSeconds + "s)...";
+                } else {
+                    clearInterval(adInterval);
+                    overlayTimer.innerText = "✅ Ad verification completed!";
+                    unlockBtn.disabled = false;
+                    unlockBtn.innerText = "CONTINUE TO PAGE ➔";
+                }
+            }, 1000);
+        }
+
+        function closeAdOverlay() {
+            document.getElementById("adOverlay").style.display = "none";
+            // Overlay band hone ke baad step timer chalu hoga
+            setupVerification(currentStep);
+        }
+
+        // Main Page Step Verification Countdown
+        function setupVerification(step) {
+            document.getElementById("stepIndicator").innerText = "STEP " + step + "/4";
+            document.getElementById("articleTitle").innerText = stepHeadings[step - 1] || "Verification Step";
+
+            let timerSeconds = stepTimers[step - 1] || 20;
+
+            const timerDisplay = document.getElementById("timerCountdown");
+            const scrollMsg = document.getElementById("scrollPrompt");
+            const btn = document.getElementById("btnContinue");
+
+            btn.disabled = true;
+            btn.innerText = "⏳ PLEASE WAIT (" + timerSeconds + "s)...";
+            timerDisplay.innerText = "⏳ VERIFYING SESSION: PLEASE WAIT (" + timerSeconds + "s)...";
+
+            const countdownInterval = setInterval(() => {
+                timerSeconds--;
+                if (timerSeconds > 0) {
+                    timerDisplay.innerText = "⏳ VERIFYING SESSION: PLEASE WAIT (" + timerSeconds + "s)...";
+                    btn.innerText = "⏳ PLEASE WAIT (" + timerSeconds + "s)...";
+                } else {
+                    clearInterval(countdownInterval);
+                    
+                    // Upar Scroll Down prompt dikhega
+                    timerDisplay.style.display = "none";
+                    scrollMsg.style.display = "block";
+
+                    // Niche Continue button unlock hoga
+                    btn.disabled = false;
+                    if (step === 4) {
+                        btn.innerText = "GET LINK (GO TO KEY GENERATOR) ➔";
+                    } else {
+                        btn.innerText = "CONTINUE TO STEP " + (step + 1) + " ➔";
+                    }
+                }
+            }, 1000);
+        }
+
+        function handleContinue() {
+            if (currentStep < 4) {
+                // Agle step par jaayein (aur session claim pass karein)
+                window.location.href = window.location.pathname + "?step=" + (currentStep + 1) + "&claim=" + selectedDuration;
+            } else {
+                // 4th step ke baad Key Generator site par fresh one-time token ke saath redirect karein
+                const freshToken = Date.now();
+                window.location.href = "https://ayanali1012010-dev.github.io/ayan-key/?claim=" + selectedDuration + "&token=" + freshToken;
+            }
+        }
+    </script>
+</body>
+</html>
