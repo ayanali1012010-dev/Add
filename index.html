@@ -1,677 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finance & Wealth Portal - Secure Gateway</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finance & Wealth Portal — Verification Gateway</title>
 
-    <!-- ADSTERRA SOCIAL BAR SCRIPT -->
-    <script async src="https://pl31582757.profitableratecpmnetwork.com/1f/89/9d/1f899d04f76fc54f606dd14d7b408935.js"></script>
+  <!-- ADSTERRA SOCIAL BAR SCRIPT -->
+  <script async src="https://pl31582757.profitablecpmratecontent.com/1f/89/96/1f899604776f34596b614d7b6408935.js"></script>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
 
-        html {
-            scroll-behavior: smooth;
-        }
+    body {
+      background-color: #0b0c10;
+      color: #c5c6c7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
+    }
 
-        body {
-            background-color: #0d1117;
-            color: #c9d1d9;
-            line-height: 1.7;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+    /* HARD ADBLOCK OVERLAY */
+    #adblock-notice {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #0d1117;
+      z-index: 999999999;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 24px;
+    }
 
-        /* HARD ANTI-ADBLOCK OVERLAY */
-        #adblock-notice {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #0d1117;
-            z-index: 99999999999;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 24px;
-        }
-        #adblock-notice h2 {
-            color: #f85149;
-            font-size: 24px;
-            margin-bottom: 12px;
-            font-weight: 800;
-        }
-        #adblock-notice p {
-            color: #c9d1d9;
-            font-size: 14px;
-            max-width: 400px;
-            line-height: 1.6;
-            margin-bottom: 22px;
-        }
-        .btn-reload {
-            background: #238636;
-            color: #ffffff;
-            padding: 14px 28px;
-            border-radius: 8px;
-            border: none;
-            font-size: 14px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            cursor: pointer;
-        }
+    #adblock-notice h2 {
+      color: #ff4545;
+      font-size: 24px;
+      margin-bottom: 12px;
+      font-weight: 800;
+    }
 
-        /* ================= MANDATORY AD OVERLAY ================= */
-        #adOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(13, 17, 23, 0.98);
-            z-index: 999999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-        }
+    #adblock-notice p {
+      color: #c5c6c7;
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: 420px;
+      margin-bottom: 24px;
+    }
 
-        .overlay-card {
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 12px;
-            max-width: 440px;
-            width: 100%;
-            padding: 16px;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-        }
+    .btn-reload {
+      background: #45a29e;
+      color: #000;
+      padding: 14px 28px;
+      border-radius: 8px;
+      border: none;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      cursor: pointer;
+    }
 
-        .overlay-title {
-            font-size: 16px;
-            font-weight: 800;
-            color: #58a6ff;
-            margin-bottom: 6px;
-        }
+    .header {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 12px 16px;
+      background: #1f2833;
+      border-radius: 12px;
+      border: 1px solid #45a29e33;
+    }
 
-        .overlay-timer {
-            font-size: 13px;
-            color: #f85149;
-            font-weight: bold;
-            margin-bottom: 12px;
-        }
+    .brand-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #66fcf1;
+      letter-spacing: 1px;
+    }
 
-        .overlay-ad-box {
-            width: 100%;
-            height: 360px;
-            background: #0d1117;
-            border: 1px solid #30363d;
-            border-radius: 8px;
-            margin-bottom: 14px;
-            overflow: hidden;
-            position: relative;
-        }
+    .step-badge {
+      background: #45a29e;
+      color: #0b0c10;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 13px;
+    }
 
-        .overlay-ad-box iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+    .ad-card {
+      width: 100%;
+      max-width: 480px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #141b22;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #30363d;
+    }
 
-        /* ================= MAIN SITE STYLES ================= */
-        header {
-            background: #161b22;
-            border-bottom: 1px solid #30363d;
-            padding: 14px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+    .content-box {
+      width: 100%;
+      max-width: 480px;
+      background: #1f2833;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+      border-left: 4px solid #45a29e;
+    }
 
-        .logo {
-            font-size: 18px;
-            font-weight: 800;
-            color: #58a6ff;
-            text-decoration: none;
-            letter-spacing: 1px;
-        }
+    .content-box h3 {
+      color: #fff;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
 
-        .step-badge {
-            background: #238636;
-            color: #ffffff;
-            font-size: 11px;
-            font-weight: bold;
-            padding: 5px 12px;
-            border-radius: 14px;
-        }
+    .content-box p {
+      font-size: 13px;
+      color: #8b949e;
+      line-height: 1.5;
+    }
 
-        .container {
-            max-width: 720px;
-            margin: 20px auto;
-            padding: 0 16px;
-            width: 100%;
-            flex: 1;
-        }
+    .gateway-action {
+      width: 100%;
+      max-width: 480px;
+      background: #161b22;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid #30363d;
+      margin-top: 10px;
+      margin-bottom: 40px;
+    }
 
-        .timer-panel {
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 8px;
-            padding: 14px 18px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
+    .btn-action {
+      width: 100%;
+      padding: 16px;
+      background: #45a29e;
+      color: #0b0c10;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      cursor: pointer;
+      display: block;
+      text-decoration: none;
+    }
 
-        .timer-text {
-            font-size: 15px;
-            font-weight: 700;
-            color: #58a6ff;
-        }
-
-        .scroll-prompt {
-            display: none;
-            color: #3fb950;
-            font-size: 15px;
-            font-weight: 800;
-            animation: bounce 1.2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(4px); }
-        }
-
-        .ad-banner-slot {
-            width: 100%;
-            min-height: 250px;
-            margin: 20px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .ad-iframe-slot {
-            width: 100%;
-            height: 320px;
-            margin: 20px 0;
-            border: 1px solid #30363d;
-            border-radius: 10px;
-            overflow: hidden;
-            background: #161b22;
-        }
-
-        .ad-iframe-slot iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .content-card {
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 10px;
-            padding: 24px 20px;
-            margin-bottom: 16px;
-        }
-
-        h1 {
-            font-size: 22px;
-            color: #ffffff;
-            margin-bottom: 12px;
-            line-height: 1.3;
-        }
-
-        h2 {
-            font-size: 18px;
-            color: #58a6ff;
-            margin: 18px 0 10px;
-        }
-
-        p {
-            margin-bottom: 14px;
-            color: #8b949e;
-            font-size: 14px;
-        }
-
-        ul {
-            margin: 0 0 16px 20px;
-            color: #8b949e;
-            font-size: 14px;
-        }
-
-        li {
-            margin-bottom: 6px;
-        }
-
-        .notice-box {
-            background: rgba(88, 166, 255, 0.08);
-            border-left: 4px solid #58a6ff;
-            padding: 12px 14px;
-            border-radius: 4px;
-            margin: 16px 0;
-            font-size: 13px;
-            color: #c9d1d9;
-        }
-
-        .bottom-action-panel {
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 10px;
-            padding: 24px 20px;
-            margin-top: 30px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .btn-action {
-            width: 100%;
-            padding: 16px;
-            border-radius: 8px;
-            border: none;
-            font-size: 15px;
-            font-weight: 800;
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: center;
-            display: block;
-            text-decoration: none;
-        }
-
-        .btn-action:disabled {
-            background: #21262d;
-            color: #484f58;
-            cursor: not-allowed;
-            border: 1px solid #30363d;
-        }
-
-        .btn-action:not(:disabled) {
-            background: #238636;
-            color: #ffffff;
-            box-shadow: 0 4px 15px rgba(35, 134, 54, 0.4);
-        }
-
-        .btn-action:not(:disabled):hover {
-            background: #2ea043;
-            transform: translateY(-2px);
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 12px;
-            color: #484f58;
-            border-top: 1px solid #21262d;
-            margin-top: auto;
-        }
-    </style>
+    .btn-action:disabled {
+      background: #21262d;
+      color: #484f58;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- ADBLOCK DETECTED OVERLAY -->
-    <div id="adblock-notice">
-        <h2>⚠️ ADBLOCKER DETECTED!</h2>
-        <p>Brave Shields / AdBlocker चालू है!<br><br>कृपया ऊपर URL बार में 🦁 <b>Brave Shields</b> या अपना <b>AdBlocker बंद करें</b> और पेज रीलोड करें।</p>
-        <button class="btn-reload" onclick="window.location.reload()">I DISABLED ADBLOCK (RELOAD)</button>
-    </div>
+  <!-- HARD ADBLOCK OVERLAY -->
+  <div id="adblock-notice">
+    <h2>⚠️ ADBLOCKER DETECTED!</h2>
+    <p>Brave Shields या AdBlocker चालू है!<br><br>कृपया ऊपर URL बार में 🦁 Brave Shields या अपना AdBlocker बंद करें और पेज रीलोड करें।</p>
+    <button class="btn-reload" onclick="location.reload()">I DISABLED ADBLOCK (RELOAD)</button>
+  </div>
 
-    <!-- MANDATORY 15s AD OVERLAY -->
-    <div id="adOverlay">
-        <div class="overlay-card">
-            <div id="overlayStepText" class="overlay-title">SPONSORED VERIFICATION</div>
-            <div id="overlayTimerText" class="overlay-timer">Please view ad to unlock content (15s)</div>
-            
-            <div class="overlay-ad-box">
-                <iframe src="https://www.profitableratecpmnetwork.com/edi67kf4j?key=e6c73630469a3f3caec524d8a7a8681c"></iframe>
-            </div>
+  <div class="header">
+    <div class="brand-title">FINANCEGATE</div>
+    <div class="step-badge" id="step-display">STEP 1/6</div>
+  </div>
 
-            <button id="btnUnlockSite" class="btn-action" disabled onclick="closeAdOverlay()">PLEASE WAIT (15s)...</button>
-        </div>
-    </div>
-
-    <!-- MAIN HEADER -->
-    <header>
-        <a href="#" class="logo">FINANCE<span>GATE</span></a>
-        <span id="stepIndicator" class="step-badge">STEP 1</span>
-    </header>
-
-    <div class="container" id="mainContainer">
-
-        <!-- TOP TIMER & STATUS PANEL -->
-        <div class="timer-panel">
-            <div id="timerCountdown" class="timer-text">⏳ VERIFYING SESSION: PLEASE WAIT...</div>
-            <div id="scrollPrompt" class="scroll-prompt">✅ VERIFICATION READY — SCROLL DOWN TO CONTINUE ⬇</div>
-        </div>
-
-        <!-- 1. AD BANNER 300x250 -->
-        <div class="ad-banner-slot banner-verify">
-            <script type="text/javascript">
-                atOptions = {
-                    'key' : '51094004b5c27de1e2c4ed112a7e100b',
-                    'format' : 'iframe',
-                    'height' : 250,
-                    'width' : 300,
-                    'params' : {}
-                };
-            </script>
-            <script type="text/javascript" src="https://www.highrevenueformat.com/51094004b5c27de1e2c4ed112a7e100b/invoke.js"></script>
-        </div>
-
-        <!-- CONTENT SECTION 1 -->
-        <div class="content-card">
-            <h1 id="articleTitle">Complete Strategy for Debt Optimization and Refinancing</h1>
-            <p>Managing multiple high-interest obligations can place immense stress on personal and business cash flow. Through strategic loan restructuring and balance consolidation, borrowers can significantly reduce overall amortization timelines while lowering annual percentage rates (APR).</p>
-            <div class="notice-box">
-                <strong>Notice:</strong> Always check lender terms and closing fees before refinancing.
-            </div>
-        </div>
-
-        <!-- 2. AD IFRAME FULL -->
-        <div class="ad-iframe-slot">
-            <iframe src="https://www.profitableratecpmnetwork.com/edi67kf4j?key=e6c73630469a3f3caec524d8a7a8681c" loading="lazy"></iframe>
-        </div>
-
-        <!-- CONTENT SECTION 2 -->
-        <div class="content-card">
-            <h2>Phase 1: Evaluating Historical Credit Metrics</h2>
-            <p>Financial institutions evaluate credit profiles based on debt-to-income (DTI) metrics, repayment consistency, and current revolving account utilization. Maintaining utilization rates under thirty percent directly improves institutional approval likelihood.</p>
-            <ul>
-                <li>Review all three major credit repository reports for discrepancies.</li>
-                <li>Calculate remaining principal vs accrued monthly interest.</li>
-            </ul>
-        </div>
-
-        <!-- 3. AD BANNER 300x250 -->
-        <div class="ad-banner-slot">
-            <script type="text/javascript">
-                atOptions = {
-                    'key' : '51094004b5c27de1e2c4ed112a7e100b',
-                    'format' : 'iframe',
-                    'height' : 250,
-                    'width' : 300,
-                    'params' : {}
-                };
-            </script>
-            <script type="text/javascript" src="https://www.highrevenueformat.com/51094004b5c27de1e2c4ed112a7e100b/invoke.js"></script>
-        </div>
-
-        <!-- CONTENT SECTION 3 -->
-        <div class="content-card">
-            <h2>Phase 2: Risk Assessment & Cost Optimization</h2>
-            <p>Effective restructuring requires comparing cumulative costs across the entire lifecycle of the facility. An extended amortization schedule might lower current monthly outflows but could accumulate significantly higher aggregate interest payments over time.</p>
-        </div>
-
-        <!-- 4. AD IFRAME FULL -->
-        <div class="ad-iframe-slot">
-            <iframe src="https://www.profitableratecpmnetwork.com/edi67kf4j?key=e6c73630469a3f3caec524d8a7a8681c" loading="lazy"></iframe>
-        </div>
-
-        <!-- CONTENT SECTION 4 -->
-        <div class="content-card">
-            <h2>Phase 3: Digital Underwriting Systems</h2>
-            <p>Modern credit processing uses automated algorithmic underwriting rather than manual agent evaluations. By submitting structured digital verification packets, applicants reduce clearance latency from weeks to under twenty-four hours.</p>
-        </div>
-
-        <!-- 5. AD BANNER 300x250 -->
-        <div class="ad-banner-slot">
-            <script type="text/javascript">
-                atOptions = {
-                    'key' : '51094004b5c27de1e2c4ed112a7e100b',
-                    'format' : 'iframe',
-                    'height' : 250,
-                    'width' : 300,
-                    'params' : {}
-                };
-            </script>
-            <script type="text/javascript" src="https://www.highrevenueformat.com/51094004b5c27de1e2c4ed112a7e100b/invoke.js"></script>
-        </div>
-
-        <!-- CONTENT SECTION 5 -->
-        <div class="content-card">
-            <h2>Phase 4: Collateralized Restructuring</h2>
-            <p>Borrowers often choose between securing loans against personal assets or maintaining unsecured financing agreements. Secured facilities offer lower interest margins but require collateral pledge.</p>
-        </div>
-
-        <!-- 6. AD IFRAME FULL -->
-        <div class="ad-iframe-slot">
-            <iframe src="https://www.profitableratecpmnetwork.com/edi67kf4j?key=e6c73630469a3f3caec524d8a7a8681c" loading="lazy"></iframe>
-        </div>
-
-        <!-- CONTENT SECTION 6 -->
-        <div class="content-card">
-            <h2>Phase 5: Final Session Clearance</h2>
-            <p>Session integrity verification protects network nodes from automated scraping. Please wait for the timer to finish and unlock the continue action below.</p>
-        </div>
-
-        <!-- 7. AD BANNER 300x250 -->
-        <div class="ad-banner-slot">
-            <script type="text/javascript">
-                atOptions = {
-                    'key' : '51094004b5c27de1e2c4ed112a7e100b',
-                    'format' : 'iframe',
-                    'height' : 250,
-                    'width' : 300,
-                    'params' : {}
-                };
-            </script>
-            <script type="text/javascript" src="https://www.highrevenueformat.com/51094004b5c27de1e2c4ed112a7e100b/invoke.js"></script>
-        </div>
-
-        <!-- EXTREME BOTTOM CONTINUE PANEL -->
-        <div class="bottom-action-panel" id="actionPanel">
-            <div style="font-size: 12px; color: #8b949e; margin-bottom: 12px; letter-spacing: 1px;">FINAL GATEWAY CONFIRMATION</div>
-            <button id="btnContinue" class="btn-action" disabled onclick="handleContinue()">PLEASE WAIT FOR TIMER...</button>
-        </div>
-
-        <!-- 8. AD IFRAME FULL -->
-        <div class="ad-iframe-slot">
-            <iframe src="https://www.profitableratecpmnetwork.com/edi67kf4j?key=e6c73630469a3f3caec524d8a7a8681c" loading="lazy"></iframe>
-        </div>
-
-    </div>
-
-    <footer>Verification Gateway Node • 256-Bit Authenticated Protocol</footer>
-
-    <script>
-        const AD_DIRECT_LINK = "https://www.profitableratecpmnetwork.com/edi67kf4j?key=e6c73630469a3f3caec524d8a7a8681c";
-
-        const stepTimers = [20, 21, 21, 22, 21, 22];
-
-        const stepHeadings = [
-            "Step 1: Strategic Debt Optimization & Capital Planning",
-            "Step 2: Underwriting Protocols & Security Verification",
-            "Step 3: Asset Protection & Gateway Authentication",
-            "Step 4: Final Session Clearance & Node Routing",
-            "Step 5: High-Trust Token Verification Protocol",
-            "Step 6: Final Cryptographic Key Issuance"
-        ];
-
-        let currentStep = 1;
-        let selectedDuration = "3h";
-        let totalSteps = 4;
-        let isAdBlockDetected = false;
-
-        // ================= STRICT AD-SHIELD KILLER =================
-        function triggerAdblockNotice() {
-            if (isAdBlockDetected) return;
-            isAdBlockDetected = true;
-            document.getElementById('adblock-notice').style.display = 'flex';
-            const overlay = document.getElementById("adOverlay");
-            if (overlay) overlay.style.display = "none";
-            const main = document.getElementById("mainContainer");
-            if (main) main.style.display = "none";
-            if (window.overlayInterval) clearInterval(window.overlayInterval);
-            if (window.countdownInterval) clearInterval(window.countdownInterval);
-        }
-
-        // Test 1: Fetch live Adsterra script domain
-        fetch('https://www.highrevenueformat.com/51094004b5c27de1e2c4ed112a7e100b/invoke.js', { mode: 'no-cors' })
-            .catch(() => triggerAdblockNotice());
-
-        // Test 2: Script element error check
-        const testScript = document.createElement('script');
-        testScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
-        testScript.onerror = () => triggerAdblockNotice();
-        document.head.appendChild(testScript);
-
-        // Test 3: Ad Banner DOM verification (Brave leaves banner empty)
-        setTimeout(() => {
-            const banner = document.querySelector('.banner-verify');
-            if (banner && (banner.offsetHeight === 0 || banner.children.length === 0 || !banner.querySelector('iframe, img, a'))) {
-                triggerAdblockNotice();
-            }
-        }, 1800);
-
-        try {
-            const params = new URLSearchParams(window.location.search);
-            const stepParam = params.get('step');
-            const claimParam = params.get('claim');
-
-            if (stepParam) {
-                currentStep = parseInt(stepParam) || 1;
-            }
-
-            if (claimParam === '6h') {
-                selectedDuration = '6h';
-                totalSteps = 6;
-            } else {
-                selectedDuration = '3h';
-                totalSteps = 4;
-            }
-        } catch(e) {}
-
-        function initGateway() {
-            const adState = sessionStorage.getItem('step_' + currentStep + '_ad_clicked');
-            if (adState === 'true') {
-                document.getElementById("adOverlay").style.display = "none";
-                document.getElementById("timerCountdown").style.display = "none";
-                document.getElementById("scrollPrompt").style.display = "block";
-                document.getElementById("stepIndicator").innerText = "STEP " + currentStep + "/" + totalSteps;
-                document.getElementById("articleTitle").innerText = stepHeadings[currentStep - 1] || "Verification Step";
-
-                const btn = document.getElementById("btnContinue");
-                btn.disabled = false;
-                btn.innerText = "CLICK TO CONTINUE ➔";
-                btn.style.background = "#58a6ff";
-                return;
-            }
-
-            startMandatoryAdOverlay();
-        }
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initGateway);
-        } else {
-            initGateway();
-        }
-
-        function startMandatoryAdOverlay() {
-            let adSeconds = 15;
-            const overlay = document.getElementById("adOverlay");
-            const unlockBtn = document.getElementById("btnUnlockSite");
-            const overlayTimer = document.getElementById("overlayTimerText");
-            const overlayStepText = document.getElementById("overlayStepText");
-
-            overlay.style.display = "flex";
-            overlayStepText.innerText = "SPONSORED VERIFICATION (STEP " + currentStep + "/" + totalSteps + ")";
-            unlockBtn.disabled = true;
-            overlayTimer.innerText = "Please view ad to unlock content (" + adSeconds + "s)";
-            unlockBtn.innerText = "PLEASE WAIT (" + adSeconds + "s)...";
-
-            window.overlayInterval = setInterval(() => {
-                if (isAdBlockDetected) return;
-                adSeconds--;
-                if (adSeconds > 0) {
-                    overlayTimer.innerText = "Please view ad to unlock content (" + adSeconds + "s)";
-                    unlockBtn.innerText = "PLEASE WAIT (" + adSeconds + "s)...";
-                } else {
-                    clearInterval(window.overlayInterval);
-                    overlayTimer.innerText = "✅ Ad verification completed!";
-                    unlockBtn.disabled = false;
-                    unlockBtn.innerText = "CONTINUE TO PAGE ➔";
-                }
-            }, 1000);
-        }
-
-        function closeAdOverlay() {
-            document.getElementById("adOverlay").style.display = "none";
-            setupVerification(currentStep);
-        }
-
-        function setupVerification(step) {
-            document.getElementById("stepIndicator").innerText = "STEP " + step + "/" + totalSteps;
-            document.getElementById("articleTitle").innerText = stepHeadings[step - 1] || "Verification Step";
-
-            let timerSeconds = stepTimers[step - 1] || 20;
-
-            const timerDisplay = document.getElementById("timerCountdown");
-            const scrollMsg = document.getElementById("scrollPrompt");
-            const btn = document.getElementById("btnContinue");
-
-            btn.disabled = true;
-            btn.innerText = "⏳ PLEASE WAIT (" + timerSeconds + "s)...";
-            timerDisplay.innerText = "⏳ VERIFYING SESSION: PLEASE WAIT (" + timerSeconds + "s)...";
-
-            window.countdownInterval = setInterval(() => {
-                if (isAdBlockDetected) return;
-                timerSeconds--;
-                if (timerSeconds > 0) {
-                    timerDisplay.innerText = "⏳ VERIFYING SESSION: PLEASE WAIT (" + timerSeconds + "s)...";
-                    btn.innerText = "⏳ PLEASE WAIT (" + timerSeconds + "s)...";
-                } else {
-                    clearInterval(window.countdownInterval);
-                    
-                    timerDisplay.style.display = "none";
-                    scrollMsg.style.display = "block";
-
-                    btn.disabled = false;
-                    if (step === totalSteps) {
-                        btn.innerText = "GET LINK (GO TO KEY GENERATOR) ➔";
-                    } else {
-                        btn.innerText = "CONTINUE TO STEP " + (step + 1) + " ➔";
-                    }
-                }
-            }, 1000);
-        }
-
-        function handleContinue() {
-            const btn = document.getElementById("btnContinue");
-            const adState = sessionStorage.getItem('step_' + currentStep + '_ad_clicked');
-
-            const isAdTriggerStep = (currentStep === 1 || currentStep === 3 || (selectedDuration === '6h' && currentStep === 5));
-
-            if (isAdTriggerStep && adState !== 'true') {
-                sessionStorage.setItem('step_' + currentStep + '_ad_clicked', 'true');
-                window.open(AD_DIRECT_LINK, '_blank');
-                btn.innerText = "CLICK TO CONTINUE ➔";
-                btn.style.background = "#58a6ff";
-                return;
-            }
-
-            sessionStorage.removeItem('step_' + currentStep + '_ad_clicked');
-
-            if (currentStep < totalSteps) {
-                window.location.href = window.location.pathname + "?step=" + (currentStep + 1) + "&claim=" + selectedDuration;
-            } else {
-                const freshToken = Date.now();
-                window.location.href = "https://ayanali1012010-dev.github.io/ayan-key/?claim=" + selectedDuration + "&token=" + freshToken;
-            }
-        }
+  <!-- AD SLOT 1 -->
+  <div class="ad-card">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '515006d649d21c4391b16e8773950669',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300,
+        'params' : {}
+      };
     </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/515006d649d21c4391b16e8773950669/invoke.js"></script>
+  </div>
+
+  <div class="content-box">
+    <h3 id="step-title">Step 1: Strategic Debt Optimization</h3>
+    <p id="step-desc">Managing multiple high-interest obligations can place immense stress on personal and business cash flow. Through strategic loan restructuring and balance consolidation, borrowers can significantly reduce overall amortization timelines while lowering annual percentage rates (APR).</p>
+  </div>
+
+  <!-- AD SLOT 2 -->
+  <div class="ad-card">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '515006d649d21c4391b16e8773950669',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/515006d649d21c4391b16e8773950669/invoke.js"></script>
+  </div>
+
+  <div class="gateway-action">
+    <button class="btn-action" id="action-btn" disabled onclick="handleContinue()">PLEASE WAIT (15s)...</button>
+  </div>
+
+  <!-- SCRIPT ENGINE -->
+  <script>
+    const AD_DIRECT_LINK = "https://www.profitablecpmratecontent.com/fy4u2f4c?key=dc2573f080ec0ef748b6c49cd7469a94";
+    let isAdBlockDetected = false;
+
+    // Strict Adblock Detection
+    function triggerAdblock() {
+      isAdBlockDetected = true;
+      document.getElementById('adblock-notice').style.display = 'flex';
+    }
+
+    const testAd = document.createElement('div');
+    testAd.className = 'ad-banner adsbox ad-placement google-ad doubleclick';
+    testAd.style.height = '1px';
+    testAd.style.width = '1px';
+    testAd.style.position = 'absolute';
+    testAd.style.left = '-10000px';
+    document.body.appendChild(testAd);
+
+    setTimeout(() => {
+      if (testAd.offsetHeight === 0 || testAd.offsetWidth === 0) {
+        triggerAdblock();
+      }
+      testAd.remove();
+    }, 400);
+
+    // Flow Management
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentStep = parseInt(urlParams.get('step')) || 1;
+    let claimDuration = urlParams.get('claim') || '3h';
+    let totalSteps = (claimDuration === '6h') ? 6 : 4;
+
+    document.getElementById('step-display').innerText = `STEP ${currentStep}/${totalSteps}`;
+
+    // Timer Countdown
+    let timeLeft = 15;
+    const actionBtn = document.getElementById('action-btn');
+
+    const countdown = setInterval(() => {
+      if (isAdBlockDetected) return;
+      timeLeft--;
+      if (timeLeft > 0) {
+        actionBtn.innerText = `PLEASE WAIT (${timeLeft}s)...`;
+      } else {
+        clearInterval(countdown);
+        actionBtn.disabled = false;
+        actionBtn.innerText = (currentStep < totalSteps) ? `CONTINUE TO STEP ${currentStep + 1} ➔` : `GET YOUR FINAL KEY ➔`;
+        actionBtn.style.background = '#66fcf1';
+      }
+    }, 1000);
+
+    function handleContinue() {
+      // Direct Link Popunder Trigger
+      const stepClickedKey = 'clicked_step_' + currentStep;
+      if (!sessionStorage.getItem(stepClickedKey)) {
+        sessionStorage.setItem(stepClickedKey, 'true');
+        window.open(AD_DIRECT_LINK, '_blank');
+        return;
+      }
+
+      sessionStorage.removeItem(stepClickedKey);
+      if (currentStep < totalSteps) {
+        window.location.href = `https://ayanali1012010-dev.github.io/Add/?step=${currentStep + 1}&claim=${claimDuration}`;
+      } else {
+        const freshToken = Date.now();
+        window.location.href = `https://ayanali1012010-dev.github.io/ayan-key/?valid=true&token=${freshToken}&claim=${claimDuration}`;
+      }
+    }
+  </script>
 </body>
 </html>
